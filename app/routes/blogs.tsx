@@ -20,7 +20,7 @@ export default function Blogs() {
   const blogs: Blog[] = useLoaderData();
   return (
     <div className="max-h-screen h-screen max-w-[720px] mx-auto pt-[40px]">
-      <h1 className="font-head text-5xl font-bold text-white">Blogs</h1>
+      <h1 className="font-head text-4xl font-bold text-white">Blogs</h1>
 
       <div className="flex flex-col gap-4 mt-[40px]">
         {

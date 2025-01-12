@@ -1,0 +1,64 @@
+---
+title: What is Docker
+date: 2024-01-09
+description: Getting started with Docker
+slug: what-is-docker
+seq: 1
+---
+
+# Docker Introduction
+
+This is an introduction to Docker...
+
+## Key Concepts
+
+- Containers
+- Images
+- Dockerfile
+
+## Example Code
+
+```javascript
+console.log("hello");
+```
+
+In the above example the element `<Blog />` basically houses the common layout/logic for all of the children below it. It specifically needs to render an `<Outlet />` to define where the nested routes will render.
+That's basically the same exact idea here in Remix, except that structure is being defined using the file system. Once I wrapped my head around that it made a litte bit more sense.
+
+### Now back to syntax highlighting...
+
+Now that we have that structure in place, the only thing left to do is setup up our `highlight.js` CSS file to specifically load in _only_ for our blog routing. This is because we likely won't need those styles anywhere else but in the blog posts.
+
+In addition to that Remix seems to optimize what CSS is sent _per page_. Meaning to enable our syntax highlighting we'd have to include the styles in each page. That seems overkill, so instead we're going to load it inside our `blog.tsx` (which again remember wraps the underlying nested children) so that we only define it once across all blog posts.
+
+```ts
+import styles from "highlight.js/styles/github-dark-dimmed.css"; // change this to your desired theme
+import type { LinksFunction, LoaderFunction } from "remix";
+import { MetaFunction, Outlet } from "remix";
+
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: "stylesheet",
+      href: styles,
+    },
+  ];
+};
+
+export default function Blog() {
+  return <Outlet />;
+}
+```
+
+Now if you're able to see all of the above code blocks with proper highlighting then I must've done it right!
+
+## Where to go from here
+
+- In general the site's stlyes and look/feel is still pretty plain. I'll need to improve that to something... reasonable.
+  - Looking to add tailwind since I've been wanting to learn that anyways
+- A challenge to figure out: how to display nested attributes from the parent `blog.tsx`? For example what if I wanted to determine the title or date of a specific blog post so that I can render it consistently across all posts?
+  - Actually I noticed Kent C. Dodd's blog doesn't utilize Remix's built-in MDX route modules. I have a feeling it's because of maybe one of these concerns
+- I need to improve the [base blog page](/blog) to dynamically determine the full list of blog posts
+  - I'll probably need to read from the file system then utilize frontmatter to determine titles, dates, etc.
+
+Anyways that's it for now!
